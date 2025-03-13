@@ -11,8 +11,5 @@ Ronald A. Rasband
 “It is mentally rigorous to strive to look unto Him in every thought. But, when we do, our doubts and fears flee.”—President Russell M. Nelson, “Drawing the Power of Jesus Christ into Our Lives”
 -Matthew Perkins
 
-<<<<<<< HEAD
+Timoteo Tapia:
 "Obedience brings success; exact obedience brings miracles."Russell M. Nelson (Kevin Tapia)
-=======
-
-> > > > > > > c82ad0c3851c5363997c7d2e068b96095ee8ba01
