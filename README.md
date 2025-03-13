@@ -2,6 +2,7 @@
 
 it is a chatbot to assist customers and help business to have a better support service
 
+Anne's favorite quote: "The future is as bright as your faith." Thomas S. Monson
 
 Juan Plasencia:
 Allow [the Lord] to make more of you than you can make of yourself on your own. Treasure His involvement.
@@ -13,4 +14,5 @@ Ronald A. Rasband
 <<<<<<< HEAD
 "Obedience brings success; exact obedience brings miracles."Russell M. Nelson (Kevin Tapia)
 =======
->>>>>>> c82ad0c3851c5363997c7d2e068b96095ee8ba01
+
+> > > > > > > c82ad0c3851c5363997c7d2e068b96095ee8ba01
