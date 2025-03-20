@@ -13,3 +13,8 @@ Ronald A. Rasband
 
 Timoteo Tapia:
 "Obedience brings success; exact obedience brings miracles."Russell M. Nelson (Kevin Tapia)
+
+Standup Week 03:
+
+LLMs Mode Integration with Telegram (Juan Plasencia)
+When investigating the integration of LLMs with Telegram, it has been found that it is necessary to design an API that integrates the interface services offered by Telegram with those of a back-end that consumes the pre-trained models in the cloud, and these can return the necessary information to the chat bot. 
