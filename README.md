@@ -23,3 +23,41 @@ Timoteo Tapia:
 Standup Week 03:
 LLMs Mode Integration with Telegram (Juan Plasencia)
 When investigating the integration of LLMs with Telegram, it has been found that it is necessary to design an API that integrates the interface services offered by Telegram with those of a back-end that consumes the pre-trained models in the cloud, and these can return the necessary information to the chat bot. 
+
+## Hosting Platforms for CusChatAI
+
+For hosting the backend of the CusChatAI project, we researched several hosting platforms to identify the best option based on scalability, ease of use, integration capabilities, and cost-effectiveness. Below are the platforms we considered and the reasons for selecting the final choice.
+
+### Platforms Considered:
+1. **Vercel**
+   - **Pros**:
+     - Easy deployment with GitHub integration.
+     - Excellent for serverless functions, making it a good fit for a chatbot-based application.
+     - Automatic scaling.
+     - Free tier with generous usage limits.
+     - Fast global CDN for low-latency responses.
+   - **Cons**:
+     - Some limitations on serverless execution duration and memory on free tier.
+
+2. **Render**
+   - **Pros**:
+     - Simple deployment with auto-scaling.
+     - Free tier available for small projects.
+     - Supports databases and backend services.
+   - **Cons**:
+     - Not as widely known as other platforms like AWS, so some documentation might be lacking.
+
+3. **AWS (Amazon Web Services)**
+   - **Pros**:
+     - Highly scalable with a vast range of services.
+     - Can support complex application architectures.
+   - **Cons**:
+     - Steep learning curve.
+     - Pricing can get complex and expensive as the application grows.
+
+4. **Google Cloud**
+   - **Pros**:
+     - Highly scalable and robust infrastructure.
+     - Good integration with Google services like Calendar API.
+   - **Cons**:
+     - Similar to AWS, pricing and setup can be complex.
