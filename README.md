@@ -1,6 +1,6 @@
 # CusChatAI
 
-CusChatAI is a chatbot to assist customers and help business to have a better support service
+CusChatAI is a chatbot to assist customers and to help businesses to have a better support service
 
 Anne's favorite quote: "The future is as bright as your faith." Thomas S. Monson
 
