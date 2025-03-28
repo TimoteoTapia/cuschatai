@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from telegram import Update
+from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
 load_dotenv()
@@ -23,7 +23,15 @@ def handle_message(update: Update, context: CallbackContext) -> None:
 
 # Function to start the bot
 def start(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text("Welcome! Ask me about business hours, location, or contact info.")
+    keyboard = [
+        ["Business Hours", "Location"],
+        ["Contact"]
+    ]
+    reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True, one_time_keyboard=True)
+    update.message.reply_text(
+        "Welcome! Choose an option or ask me about business hours, location, or contact info:",
+        reply_markup=reply_markup
+    )
 
 # Command Handlers
 def hours(update: Update, context: CallbackContext) -> None:
