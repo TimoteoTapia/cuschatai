@@ -1,2 +1,16 @@
-.qodo
+# Entorno virtual
+.venv/
 .env
+.qodo
+# Configuración de Visual Studio Code
+.vscode/
+
+# Archivos de caché de Python
+__pycache__/
+*.py[cod]
+
+# Archivos de log
+*.log
+
+# Archivos temporales de pruebas
+tests/temp/
