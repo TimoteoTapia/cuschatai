@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { OpenAI } from "openai";
-import TelegramBot from "node-telegram-bot-api";
+// import TelegramBot from "node-telegram-bot-api";
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -8,7 +8,7 @@ const openai = new OpenAI({
 });
 
 // Set up Telegram bot
-const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN as string);
+// const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN as string);
 
 // Store user contexts
 type UserContext = {
