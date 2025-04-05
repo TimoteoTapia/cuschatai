@@ -2,17 +2,23 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+If you haven’t already, install the project dependencies by running:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+   ```bash
+   npm install
+   ```
+
+Once everything’s installed, you can launch the dev server with
+
+    ```bash
+    npm run dev
+    # or
+    yarn dev
+    # or
+    pnpm dev
+    # or
+    bun dev
+    ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
@@ -61,40 +67,50 @@ Standup Week 03:
 LLMs Mode Integration with Telegram (Juan Plasencia)
 When investigating the integration of LLMs with Telegram, it has been found that it is necessary to design an API that integrates the interface services offered by Telegram with those of a back-end that consumes the pre-trained models in the cloud, and these can return the necessary information to the chat bot. 
 
-## Hosting Platforms for CusChatAI
+# 📅 Google Calendar Integration Options for the Dunder Mifflin Chatbot
 
-For hosting the backend of the CusChatAI project, we researched several hosting platforms to identify the best option based on scalability, ease of use, integration capabilities, and cost-effectiveness. Below are the platforms we considered and the reasons for selecting the final choice.
+To allow customers to schedule appointments with Dunder Mifflin, we are considering integrating Google Calendar functionality into our Telegram chatbot. There are **two main approaches** to implement this feature:
 
-### Platforms Considered:
-1. **Vercel**
-   - **Pros**:
-     - Easy deployment with GitHub integration.
-     - Excellent for serverless functions, making it a good fit for a chatbot-based application.
-     - Automatic scaling.
-     - Free tier with generous usage limits.
-     - Fast global CDN for low-latency responses.
-   - **Cons**:
-     - Some limitations on serverless execution duration and memory on free tier.
+---
 
-2. **Render**
-   - **Pros**:
-     - Simple deployment with auto-scaling.
-     - Free tier available for small projects.
-     - Supports databases and backend services.
-   - **Cons**:
-     - Not as widely known as other platforms like AWS, so some documentation might be lacking.
+## 🔹 Option 1: Google Calendar Integration within the Chatbot
 
-3. **AWS (Amazon Web Services)**
-   - **Pros**:
-     - Highly scalable with a vast range of services.
-     - Can support complex application architectures.
-   - **Cons**:
-     - Steep learning curve.
-     - Pricing can get complex and expensive as the application grows.
+In this approach, the chatbot (built using Node.js) directly handles the Google Calendar scheduling functionality using the Google Calendar API.
 
-4. **Google Cloud**
-   - **Pros**:
-     - Highly scalable and robust infrastructure.
-     - Good integration with Google services like Calendar API.
-   - **Cons**:
-     - Similar to AWS, pricing and setup can be complex.
+### 🔧 How it works:
+- The user tells the bot they want to schedule an appointment.
+- The bot guides them through available dates and times.
+- The bot uses the Google Calendar API to check availability and create events.
+- The user receives a confirmation message within the Telegram chat.
+
+### ✅ Pros:
+- Seamless experience within Telegram – users never leave the chat.
+- Full control over how appointments are booked and confirmed.
+- More flexibility to customize logic (e.g., max appointments per day, buffer times, etc.).
+
+### ❌ Cons:
+- Requires handling authentication with Google API (OAuth2).
+- Slightly more complex to implement and secure.
+- You must maintain the logic to handle scheduling flow and conflict resolution.
+
+---
+
+## 🔹 Option 2: Calendar Integration via Telegram Interface (External Link or Button)
+
+In this approach, the bot sends a link or interactive button to redirect the user to an external Google Calendar booking page (e.g., using Google Calendar appointment slots or a service like Calendly connected to Google Calendar).
+
+### 🔧 How it works:
+- The user asks to book a meeting.
+- The bot replies with a link to a booking page (hosted externally).
+- The user opens the link and selects their preferred time.
+- Confirmation is sent via email or follow-up message from the bot.
+
+### ✅ Pros:
+- Easier and faster to implement.
+- No need to manage calendar conflicts or Google API logic in the bot.
+- Scalable and secure — leverages Google or third-party systems.
+
+### ❌ Cons:
+- User leaves the Telegram app to complete the booking.
+- Less control over the UI/UX and confirmation flow.
+- May feel less integrated or personal.
