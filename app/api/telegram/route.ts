@@ -19,7 +19,7 @@ const userContexts: Record<number, UserContext> = {};
 
 // Predefined responses for commands
 const commands = {
-  start: "Welcome! Ask me about business hours, location, or contact info.",
+  start: "Welcome! Use the buttons below to ask about business hours, location, or contact info.",
   hours: "Our business hours are from 9 AM to 6 PM, Monday to Friday. We are closed on weekends.",
   location:
     'We are located at 123 Business Avenue, City, Country. <a href="https://maps.google.com?q=123+Business+Avenue">Click here to view on Google Maps</a>',
@@ -27,21 +27,45 @@ const commands = {
     'You can contact us at (123) 456-7890, email us at contact@ourbusiness.com, or visit our <a href="https://www.ourbusiness.com">website</a>.',
 };
 
+// Inline keyboard for the start command
+const startKeyboard = {
+  reply_markup: {
+    inline_keyboard: [
+      [{ text: "Business Hours", callback_data: "hours" }],
+      [{ text: "Location", callback_data: "location" }],
+      [{ text: "Contact Info", callback_data: "contact" }],
+    ],
+  },
+};
+
 // Command Handlers
 bot.onText(/\/start/, (msg) => {
-  bot.sendMessage(msg.chat.id, commands.start);
+  bot.sendMessage(msg.chat.id, commands.start, startKeyboard);
 });
 
-bot.onText(/\/hours/, (msg) => {
-  bot.sendMessage(msg.chat.id, commands.hours);
-});
+// Callback Query Handler for Buttons
+bot.on("callback_query", (query) => {
+  const chatId = query.message?.chat.id;
+  const data = query.data;
 
-bot.onText(/\/location/, (msg) => {
-  bot.sendMessage(msg.chat.id, commands.location, { parse_mode: "HTML" });
-});
+  if (!chatId || !data) return;
 
-bot.onText(/\/contact/, (msg) => {
-  bot.sendMessage(msg.chat.id, commands.contact, { parse_mode: "HTML" });
+  switch (data) {
+    case "hours":
+      bot.sendMessage(chatId, commands.hours, startKeyboard);
+      break;
+    case "location":
+      bot.sendMessage(chatId, commands.location, { ...startKeyboard, parse_mode: "HTML" });
+      break;
+    case "contact":
+      bot.sendMessage(chatId, commands.contact, { ...startKeyboard, parse_mode: "HTML" });
+      break;
+    default:
+      bot.sendMessage(chatId, "Sorry, I didn't understand that.");
+  }
+
+  // Acknowledge the callback query
+  bot.answerCallbackQuery(query.id);
 });
 
 // Message Handler (Handles Non-Command Messages)
@@ -99,7 +123,6 @@ export async function POST(request: NextRequest) {
     const data = await request.json();
 
     if (data.message) {
-      // Removed unused 'message' variable
       bot.processUpdate(data); // Pass data to Telegram bot instance
     }
 
