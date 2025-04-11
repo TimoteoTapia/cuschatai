@@ -25,6 +25,7 @@ const commands = {
     'We are located at 123 Business Avenue, City, Country. <a href="https://maps.google.com?q=123+Business+Avenue">Click here to view on Google Maps</a>',
   contact:
     'You can contact us at (123) 456-7890, email us at contact@ourbusiness.com, or visit our <a href="https://www.ourbusiness.com">website</a>.',
+  appointment: 'To schedule an appointment, please use this link to setup an appointment with us <a href="https://calendly.com/macdperkins/30min">On Calendly</a>',
 };
 
 // Inline keyboard for the start command
@@ -34,6 +35,7 @@ const startKeyboard = {
       [{ text: "Business Hours", callback_data: "hours" }],
       [{ text: "Location", callback_data: "location" }],
       [{ text: "Contact Info", callback_data: "contact" }],
+      [{ text: "Schedule Appointment", callback_data: "appointment" }],
     ],
   },
 };
@@ -59,6 +61,9 @@ bot.on("callback_query", (query) => {
       break;
     case "contact":
       bot.sendMessage(chatId, commands.contact, { ...startKeyboard, parse_mode: "HTML" });
+      break;
+    case "appointment":
+      bot.sendMessage(chatId, commands.appointment, { parse_mode: "HTML" });
       break;
     default:
       bot.sendMessage(chatId, "Sorry, I didn't understand that.");
@@ -102,7 +107,7 @@ bot.on("message", async (msg) => {
 
     // Limit context size to last 10 messages
     if (userContexts[chatId].messages.length > 10) {
-      const systemMessage = userContexts[chatId].messages[0]; // Keep system prompt
+      const systemMessage = userContexts[chatId].messages[0];
       userContexts[chatId].messages = [
         systemMessage,
         ...userContexts[chatId].messages.slice(-9),
