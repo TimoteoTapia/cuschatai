@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { OpenAI } from "openai";
 import TelegramBot from "node-telegram-bot-api";
+import path from "path";
+import fs from "fs";
+
+// Load initial context
+const initialContext = JSON.parse(
+  fs.readFileSync(path.join(process.cwd(), "data/initial-context.json"), "utf8")
+);
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -19,13 +26,16 @@ const userContexts: Record<number, UserContext> = {};
 
 // Predefined responses for commands
 const commands = {
-  start: "Welcome! Use the buttons below to ask about business hours, location, or contact info.",
-  hours: "Our business hours are from 9 AM to 6 PM, Monday to Friday. We are closed on weekends.",
+  start:
+    "Welcome! Use the buttons below to ask about business hours, location, or contact info.",
+  hours:
+    "Our business hours are from 9 AM to 6 PM, Monday to Friday. We are closed on weekends.",
   location:
     'We are located at 123 Business Avenue, City, Country. <a href="https://maps.google.com?q=123+Business+Avenue">Click here to view on Google Maps</a>',
   contact:
     'You can contact us at (123) 456-7890, email us at contact@ourbusiness.com, or visit our <a href="https://www.ourbusiness.com">website</a>.',
-  appointment: 'To schedule an appointment, please use this link to setup an appointment with us <a href="https://calendly.com/macdperkins/30min">On Calendly</a>',
+  appointment:
+    'To schedule an appointment, please use this link to setup an appointment with us <a href="https://calendly.com/macdperkins/30min">On Calendly</a>',
 };
 
 // Inline keyboard for the start command
@@ -42,6 +52,15 @@ const startKeyboard = {
 
 // Command Handlers
 bot.onText(/\/start/, (msg) => {
+  const chatId = msg.chat.id;
+
+  // Initialize or reset user context with system message
+  userContexts[chatId] = {
+    messages: [
+      { role: "system", content: initialContext.dunderMifflinContext },
+    ],
+  };
+
   bot.sendMessage(msg.chat.id, commands.start, startKeyboard);
 });
 
@@ -57,10 +76,16 @@ bot.on("callback_query", (query) => {
       bot.sendMessage(chatId, commands.hours, startKeyboard);
       break;
     case "location":
-      bot.sendMessage(chatId, commands.location, { ...startKeyboard, parse_mode: "HTML" });
+      bot.sendMessage(chatId, commands.location, {
+        ...startKeyboard,
+        parse_mode: "HTML",
+      });
       break;
     case "contact":
-      bot.sendMessage(chatId, commands.contact, { ...startKeyboard, parse_mode: "HTML" });
+      bot.sendMessage(chatId, commands.contact, {
+        ...startKeyboard,
+        parse_mode: "HTML",
+      });
       break;
     case "appointment":
       bot.sendMessage(chatId, commands.appointment, { parse_mode: "HTML" });
@@ -81,10 +106,20 @@ bot.on("message", async (msg) => {
   // Ignore messages starting with "/"
   if (text?.startsWith("/")) return;
 
-  // Initialize user context if not exists
+  // Initialize user context if not exists with the customer service reminder
+  const companyName = "Dunder Mifflin";
+  
   if (!userContexts[chatId]) {
     userContexts[chatId] = {
-      messages: [{ role: "system", content: "You are a helpful assistant." }],
+      messages: [
+        {
+          role: "system",
+          content: 
+            "Remember to use all the information that was sent to you in the initial context. " +
+            "Also that You are a helpful customer service assistant for " + companyName + " Company, " + 
+            "so you should always be polite and professional",
+        },
+      ],
     };
   }
 
@@ -100,7 +135,9 @@ bot.on("message", async (msg) => {
       messages: userContexts[chatId].messages,
     });
 
-    const reply = completion.choices[0].message.content ?? "Sorry, I couldn't generate a response.";
+    const reply =
+      completion.choices[0].message.content ??
+      "Sorry, I couldn't generate a response.";
 
     // Add AI response to context
     userContexts[chatId].messages.push({ role: "assistant", content: reply });
@@ -118,7 +155,10 @@ bot.on("message", async (msg) => {
     bot.sendMessage(chatId, reply);
   } catch (error) {
     console.error("Error generating AI response:", error);
-    bot.sendMessage(chatId, "Sorry, I encountered an error processing your request.");
+    bot.sendMessage(
+      chatId,
+      "Sorry, I encountered an error processing your request."
+    );
   }
 });
 
@@ -134,6 +174,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("Error processing webhook:", error);
-    return NextResponse.json({ error: "Failed to process webhook" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to process webhook" },
+      { status: 500 }
+    );
   }
 }
