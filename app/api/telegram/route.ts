@@ -1,13 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { OpenAI } from "openai";
 import TelegramBot from "node-telegram-bot-api";
-import path from "path";
-import fs from "fs";
-
-// Load initial context
-const initialContext = JSON.parse(
-  fs.readFileSync(path.join(process.cwd(), "data/initial-context.json"), "utf8")
-);
+import { getCompanyContext } from "@/lib/db";
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -23,6 +17,9 @@ type UserContext = {
 };
 
 const userContexts: Record<number, UserContext> = {};
+
+// Store company context
+let companyContext: { company_name: string; initial_context: string };
 
 // Predefined responses for commands
 const commands = {
@@ -51,14 +48,16 @@ const startKeyboard = {
 };
 
 // Command Handlers
-bot.onText(/\/start/, (msg) => {
+bot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
+
+  if (!companyContext) {
+    companyContext = await getCompanyContext();
+  }
 
   // Initialize or reset user context with system message
   userContexts[chatId] = {
-    messages: [
-      { role: "system", content: initialContext.dunderMifflinContext },
-    ],
+    messages: [{ role: "system", content: companyContext.initial_context }],
   };
 
   bot.sendMessage(msg.chat.id, commands.start, startKeyboard);
@@ -107,16 +106,16 @@ bot.on("message", async (msg) => {
   if (text?.startsWith("/")) return;
 
   // Initialize user context if not exists with the customer service reminder
-  const companyName = "Dunder Mifflin";
-  
   if (!userContexts[chatId]) {
     userContexts[chatId] = {
       messages: [
         {
           role: "system",
-          content: 
+          content:
             "Remember to use all the information that was sent to you in the initial context. " +
-            "Also that You are a helpful customer service assistant for " + companyName + " Company, " + 
+            "Also that You are a helpful customer service assistant for " +
+            companyContext.company_name +
+            " Company, " +
             "so you should always be polite and professional",
         },
       ],
