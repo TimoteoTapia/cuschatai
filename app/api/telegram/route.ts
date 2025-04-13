@@ -61,7 +61,31 @@ bot.onText(/\/start/, (msg) => {
     ],
   };
 
-  bot.sendMessage(msg.chat.id, commands.start, startKeyboard);
+  bot.sendMessage(chatId, commands.start, startKeyboard);
+});
+
+// Command for /hours
+bot.onText(/\/hours/, (msg) => {
+  const chatId = msg.chat.id;
+  bot.sendMessage(chatId, commands.hours);
+});
+
+// Command for /location
+bot.onText(/\/location/, (msg) => {
+  const chatId = msg.chat.id;
+  bot.sendMessage(chatId, commands.location, { parse_mode: "HTML" });
+});
+
+// Command for /contact
+bot.onText(/\/contact/, (msg) => {
+  const chatId = msg.chat.id;
+  bot.sendMessage(chatId, commands.contact, { parse_mode: "HTML" });
+});
+
+// Command for /appointment
+bot.onText(/\/appointment/, (msg) => {
+  const chatId = msg.chat.id;
+  bot.sendMessage(chatId, commands.appointment, { parse_mode: "HTML" });
 });
 
 // Callback Query Handler for Buttons
@@ -108,16 +132,17 @@ bot.on("message", async (msg) => {
 
   // Initialize user context if not exists with the customer service reminder
   const companyName = "Dunder Mifflin";
-  
+
   if (!userContexts[chatId]) {
     userContexts[chatId] = {
       messages: [
         {
           role: "system",
-          content: 
+          content:
             "Remember to use all the information that was sent to you in the initial context. " +
-            "Also that You are a helpful customer service assistant for " + companyName + " Company, " + 
-            "so you should always be polite and professional",
+            "Also, you are a helpful customer service assistant for " +
+            companyName +
+            " Company, so you should always be polite and professional.",
         },
       ],
     };
@@ -129,10 +154,16 @@ bot.on("message", async (msg) => {
   }
 
   try {
+    // Ensure all content fields are strings
+    const sanitizedMessages = userContexts[chatId].messages.map((message) => ({
+      role: message.role,
+      content: typeof message.content === "string" ? message.content : JSON.stringify(message.content),
+    }));
+
     // Get AI response
     const completion = await openai.chat.completions.create({
       model: "gpt-4", // or use "gpt-3.5-turbo" for lower cost
-      messages: userContexts[chatId].messages,
+      messages: sanitizedMessages,
     });
 
     const reply =
