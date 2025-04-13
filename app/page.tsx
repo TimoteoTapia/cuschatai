@@ -13,7 +13,7 @@ export default function Home() {
         />
         <h1 className="text-3xl sm:text-5xl font-bold">CusChatAI</h1>
         <p className="text-lg sm:text-2xl max-w-xl">
-          Hello, I'm CusChatAI, your smart and friendly business assistant!
+          Hello, I&apos;m CusChatAI, your smart and friendly business assistant!
         </p>
         <p className="text-lg sm:text-xl">
           I am ready to help you with basic business information, right in your Telegram!
