@@ -1,5 +1,4 @@
 # google_calendar.py
-
 import os
 import datetime
 import json
