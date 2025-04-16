@@ -4,8 +4,11 @@ CusChatAI is a chatbot to assist customers and to help businesses to have a bett
 
 
 ## To Try Project:
+
 Go this link to get to [CusChatAI](https://cuschatai.vercel.app/)
+
 From there, open Telegram in the web app and hit the start button to get started!
+
 To try all features: Type Menu to get a start menu if you get lost. To get basic business info, type Hours, Location, or Contact. To schedule an appointment, type Appointment or click the button from the menu. View appointment or cancel by typing that option. To switch language, tell it what language to switch to.
 
 ## Getting Started
