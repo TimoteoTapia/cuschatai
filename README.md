@@ -5,7 +5,7 @@ CusChatAI is a chatbot to assist customers and to help businesses to have a bett
 
 ## To Try Project:
 
-Go this link to get to [CusChatAI](https://cuschatai.vercel.app/)
+Go this link to get to **[CusChatAI](https://cuschatai.vercel.app/)**
 
 From there, open Telegram in the web app and hit the start button to get started!
 
