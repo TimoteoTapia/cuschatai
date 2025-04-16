@@ -3,7 +3,7 @@
 CusChatAI is a chatbot to assist customers and to help businesses to have a better support service
 
 
-## To Try Project:
+## Try Our Project:
 
 Go this link to get to **[CusChatAI](https://cuschatai.vercel.app/)**
 
