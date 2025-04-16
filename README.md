@@ -1,6 +1,15 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CusChatAI
+
+CusChatAI is a chatbot to assist customers and to help businesses to have a better support service
+
+
+## To Try Project:
+Go this link to get to [CusChatAI](https://cuschatai.vercel.app/)
+From there, open Telegram in the web app and hit the start button to get started!
+To try all features: Type Menu to get a start menu if you get lost. To get basic business info, type Hours, Location, or Contact. To schedule an appointment, type Appointment or click the button from the menu. View appointment or cancel by typing that option. To switch language, tell it what language to switch to.
 
 ## Getting Started
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 If you haven’t already, install the project dependencies by running:
 
@@ -40,10 +49,6 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-# CusChatAI
-
-CusChatAI is a chatbot to assist customers and to help businesses to have a better support service
 
 Anne's favorite quote: "The future is as bright as your faith." Thomas S. Monson
 
